@@ -59,6 +59,9 @@ with tab1:
   # Updated input widgets for Zara product features
   # Changed 'Product Position' to a multiselect
   product_position = st.sidebar.multiselect("Product Position", ('Aisle', 'End-cap', 'Front of Store'), default=['Aisle'])
+  # Define product_position_for_prediction from the multiselect output
+  product_position_for_prediction = product_position[0] if product_position else 'Aisle'
+
   # Changed 'Promotion' to a checkbox
   promotion = st.sidebar.checkbox("Promotion", False)
   product_category = st.sidebar.selectbox("Product Category", ('clothing',))
