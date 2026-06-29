@@ -5,6 +5,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import streamlit as st
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.append(str(BASE_DIR / "src"))
@@ -85,7 +87,35 @@ with tab1:
     "price": price
   }
 
-  input_df = pd.DataFrame([input_data])
+  st.subheader("Feature Distributions in Training Data")
+  st.write("These visualizations show the distribution of key features from the training dataset, providing context for your input selections.")
+
+  # Visualization 1: Price Distribution
+  fig1, ax1 = plt.subplots(figsize=(8, 4))
+  sns.histplot(training_data['price'], bins=30, kde=True, ax=ax1)
+  ax1.set_title('Distribution of Price in Training Data')
+  ax1.set_xlabel('Price')
+  ax1.set_ylabel('Count')
+  st.pyplot(fig1)
+  plt.close(fig1) # Close the figure to prevent it from being displayed twice
+
+  # Visualization 2: Product Position Distribution
+  fig2, ax2 = plt.subplots(figsize=(8, 4))
+  sns.countplot(y=training_data['Product Position'], order=training_data['Product Position'].value_counts().index, ax=ax2)
+  ax2.set_title('Distribution of Product Position in Training Data')
+  ax2.set_xlabel('Count')
+  ax2.set_ylabel('Product Position')
+  st.pyplot(fig2)
+  plt.close(fig2)
+
+  # Visualization 3: Material Distribution
+  fig3, ax3 = plt.subplots(figsize=(8, 4))
+  sns.countplot(y=training_data['material'], order=training_data['material'].value_counts().index, ax=ax3)
+  ax3.set_title('Distribution of Material in Training Data')
+  ax3.set_xlabel('Count')
+  ax3.set_ylabel('Material')
+  st.pyplot(fig3)
+  plt.close(fig3)
 
   st.subheader("Input Data")
   st.dataframe(input_df)

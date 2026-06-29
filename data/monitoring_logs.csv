@@ -1,2 +1,2 @@
 timestamp,Product Position,Promotion,Product Category,Seasonal,terms,section,season,material,origin,price,prediction,actual_sales_volume,error,absolute_error,latency_ms,feedback_score,feedback_text
-2026-06-29T10:33:20.232331,Aisle,No,clothing,No,jackets,WOMAN,Autumn,Cotton,Spain,50.0,100.0,85.0,-15.0,15.0,12.5,4,Test log
+2026-06-29T13:17:24.230272,Aisle,No,clothing,No,jackets,WOMAN,Autumn,Cotton,Spain,50.0,100.0,85.0,-15.0,15.0,12.5,4,Test log
