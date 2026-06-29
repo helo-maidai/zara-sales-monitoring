@@ -63,13 +63,11 @@ with tab_viz:
   with col_filters1:
     selected_promotion = st.selectbox(
       "Promotion",
-      options=training_data['Promotion'].unique(),
-      default=training_data['Promotion'].unique()
+      options=training_data['Promotion'].unique()
     )
     selected_seasonal = st.selectbox(
       "Seasonal",
-      options=training_data['Seasonal'].unique(),
-      default=training_data['Seasonal'].unique()
+      options=training_data['Seasonal'].unique()
     )
 
   with col_filters2:
@@ -103,8 +101,8 @@ with tab_viz:
 
   # Apply filters to training data
   filtered_training_data = training_data[
-      (training_data['Promotion'].isin(selected_promotion)) &
-      (training_data['Seasonal'].isin(selected_seasonal)) &
+      (training_data['Promotion'] == selected_promotion) &
+      (training_data['Seasonal'] == selected_seasonal) &
       (training_data['section'].isin(selected_section)) &
       (training_data['season'].isin(selected_season)) &
       (training_data['terms'].isin(selected_terms)) &
