@@ -2,5 +2,3 @@ __pycache__/
 .ipynb_checkpoints/
 *.pyc
 .pytest_cache/
-data/*.csv
-model/
