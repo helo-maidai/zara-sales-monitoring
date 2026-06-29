@@ -71,4 +71,56 @@ prediction_origin = st.sidebar.selectbox("Origin", production_data['origin'].uni
 prediction_price = st.sidebar.number_input("Input Price", min_value = 0.0, value = 50.0, step = 1.0)
 
 prediction_input_data = {
-    
+    "Product Position": prediction_product_position,
+    "Promotion": prediction_promotion,
+    "Product Category": prediction_product_category,
+    "Seasonal": prediction_seasonal,
+    "terms": prediction_terms,
+    "section": prediction_section,
+    "season": prediction_season,
+    "material": prediction_material,
+    "origin": prediction_origin,
+    "price": prediction_price
+}
+
+
+st.header("Data Overview")
+if filtered_data.empty:
+    st.warning("No data matches the selected filters.")
+else:
+    st.write(f"Displaying {len(filtered_data)} records out of {len(production_data)} total records.")
+    st.dataframe(filtered_data.head())
+
+    # Visualization 1: Sales Volume Distribution
+    st.subheader("Sales Volume Distribution")
+    fig_hist = px.histogram(filtered_data, x='Sales Volume', nbins=50,
+                            title='Distribution of Sales Volume for Filtered Data')
+    st.plotly_chart(fig_hist)
+
+    # Visualization 2: Sales by Product Category
+    st.subheader("Sales Volume by Product Category")
+    sales_by_category = filtered_data.groupby('Product Category')['Sales Volume'].sum().reset_index()
+    fig_cat = px.bar(sales_by_category, x='Product Category', y='Sales Volume',
+                     title='Total Sales Volume by Product Category')
+    st.plotly_chart(fig_cat)
+
+    # Visualization 3: Sales by Material
+    st.subheader("Sales Volume by Material")
+    sales_by_material = filtered_data.groupby('material')['Sales Volume'].sum().reset_index().sort_values(by='Sales Volume', ascending=False)
+    fig_material = px.bar(sales_by_material.head(10), x='material', y='Sales Volume',
+                          title='Top 10 Materials by Sales Volume')
+    st.plotly_chart(fig_material)
+
+    # Analytical Output 1: Average Sales Volume for Filtered Data
+    st.subheader("Analytical Output")
+    avg_sales_volume = filtered_data['Sales Volume'].mean()
+    st.metric("Average Sales Volume (Filtered Data)", f"{avg_sales_volume:,.2f} Units")
+
+    # Analytical Output 2: Prediction for a single item
+    st.subheader("Predicted Sales Volume for Selected Item")
+    if st.sidebar.button("Get Single Item Prediction"):
+        try:
+            predicted_volume = predict_sales_volume(prediction_input_data)
+            st.metric("Predicted Sales Volume", f"{predicted_volume:,.2f} Units")
+        except Exception as e:
+            st.error(f"Error making prediction: {e}. Please ensure all required features are selected and model parameters are loaded correctly.")
