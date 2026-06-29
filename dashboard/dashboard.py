@@ -61,17 +61,12 @@ with tab_viz:
   col_filters1, col_filters2, col_filters3 = st.columns(3)
 
   with col_filters1:
-    selected_product_category = st.multiselect(
-      "Product Category",
-      options=training_data['Product Category'].unique(),
-      default=training_data['Product Category'].unique()
-    )
-    selected_promotion = st.multiselect(
+    selected_promotion = st.selectbox(
       "Promotion",
       options=training_data['Promotion'].unique(),
       default=training_data['Promotion'].unique()
     )
-    selected_seasonal = st.multiselect(
+    selected_seasonal = st.selectbox(
       "Seasonal",
       options=training_data['Seasonal'].unique(),
       default=training_data['Seasonal'].unique()
@@ -108,7 +103,6 @@ with tab_viz:
 
   # Apply filters to training data
   filtered_training_data = training_data[
-      (training_data['Product Category'].isin(selected_product_category)) &
       (training_data['Promotion'].isin(selected_promotion)) &
       (training_data['Seasonal'].isin(selected_seasonal)) &
       (training_data['section'].isin(selected_section)) &
