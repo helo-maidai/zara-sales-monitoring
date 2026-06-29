@@ -62,6 +62,7 @@ with tab1:
   product_position_for_prediction = product_position[0] if product_position else 'Aisle'
 
   promotion = st.sidebar.checkbox("Promotion", False)
+  product_category = st.sidebar.selectbox("Product Category", ('clothing',))
   seasonal = st.sidebar.checkbox("Seasonal", False)
 
   terms = st.sidebar.selectbox("Terms", ('jackets', 'jeans', 'shoes', 'sweaters', 't-shirts'))
@@ -74,6 +75,7 @@ with tab1:
   input_data = {
     "Product Position": product_position_for_prediction,
     "Promotion": 'Yes' if promotion else 'No',
+    "Product Category": product_category,
     "Seasonal": 'Yes' if seasonal else 'No',
     "terms": terms,
     "section": section,
@@ -127,6 +129,7 @@ with tab1:
       log_prediction(
           product_position = product_position_for_prediction,
           promotion = 'Yes' if promotion else 'No',
+          product_category = product_category,
           seasonal = 'Yes' if seasonal else 'No',
           terms = terms,
           section = section,
