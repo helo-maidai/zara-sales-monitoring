@@ -56,32 +56,106 @@ with tab_viz:
   st.header("Feature Distributions in Training Data")
   st.write("These visualizations show the distribution of key features from the training dataset, providing context for your input selections.")
 
-  # Visualization 1: Price Distribution
-  fig1, ax1 = plt.subplots(figsize=(8, 4))
-  sns.histplot(training_data['price'], bins=30, kde=True, ax=ax1)
-  ax1.set_title('Distribution of Price in Training Data')
-  ax1.set_xlabel('Price')
-  ax1.set_ylabel('Count')
-  st.pyplot(fig1)
-  plt.close(fig1) # Close the figure to prevent it from being displayed twice
+  # Add filters for key categorical features
+  st.subheader("Filter Training Data for Visualizations")
+  col_filters1, col_filters2, col_filters3 = st.columns(3)
 
-  # Visualization 2: Product Position Distribution
-  fig2, ax2 = plt.subplots(figsize=(8, 4))
-  sns.countplot(y=training_data['Product Position'], order=training_data['Product Position'].value_counts().index, ax=ax2)
-  ax2.set_title('Distribution of Product Position in Training Data')
-  ax2.set_xlabel('Count')
-  ax2.set_ylabel('Product Position')
-  st.pyplot(fig2)
-  plt.close(fig2)
+  with col_filters1:
+    selected_product_category = st.multiselect(
+      "Product Category",
+      options=training_data['Product Category'].unique(),
+      default=training_data['Product Category'].unique()
+    )
+    selected_promotion = st.multiselect(
+      "Promotion",
+      options=training_data['Promotion'].unique(),
+      default=training_data['Promotion'].unique()
+    )
+    selected_seasonal = st.multiselect(
+      "Seasonal",
+      options=training_data['Seasonal'].unique(),
+      default=training_data['Seasonal'].unique()
+    )
 
-  # Visualization 3: Material Distribution
-  fig3, ax3 = plt.subplots(figsize=(8, 4))
-  sns.countplot(y=training_data['material'], order=training_data['material'].value_counts().index, ax=ax3)
-  ax3.set_title('Distribution of Material in Training Data')
-  ax3.set_xlabel('Count')
-  ax3.set_ylabel('Material')
-  st.pyplot(fig3)
-  plt.close(fig3)
+  with col_filters2:
+    selected_section = st.multiselect(
+      "Section",
+      options=training_data['section'].unique(),
+      default=training_data['section'].unique()
+    )
+    selected_season = st.multiselect(
+      "Season",
+      options=training_data['season'].unique(),
+      default=training_data['season'].unique()
+    )
+    selected_terms = st.multiselect(
+      "Terms",
+      options=training_data['terms'].unique(),
+      default=training_data['terms'].unique()
+    )
+
+  with col_filters3:
+    selected_material = st.multiselect(
+      "Material",
+      options=training_data['material'].unique(),
+      default=training_data['material'].unique()
+    )
+    selected_origin = st.multiselect(
+      "Origin",
+      options=training_data['origin'].unique(),
+      default=training_data['origin'].unique()
+    )
+
+  # Apply filters to training data
+  filtered_training_data = training_data[
+      (training_data['Product Category'].isin(selected_product_category)) &
+      (training_data['Promotion'].isin(selected_promotion)) &
+      (training_data['Seasonal'].isin(selected_seasonal)) &
+      (training_data['section'].isin(selected_section)) &
+      (training_data['season'].isin(selected_season)) &
+      (training_data['terms'].isin(selected_terms)) &
+      (training_data['material'].isin(selected_material)) &
+      (training_data['origin'].isin(selected_origin))
+  ]
+
+  if filtered_training_data.empty:
+    st.warning("No data available for the selected filters.")
+  else:
+    st.markdown("---  ")
+    st.subheader("Visualizations for Filtered Training Data")
+    
+    # Visualization 1: Price Distribution
+    fig1, ax1 = plt.subplots(figsize=(10, 5))
+    sns.histplot(filtered_training_data['price'], bins=30, kde=True, ax=ax1, color='skyblue')
+    ax1.set_title('Distribution of Price in Filtered Training Data', fontsize=14)
+    ax1.set_xlabel('Price', fontsize=12)
+    ax1.set_ylabel('Count', fontsize=12)
+    ax1.grid(axis='y', linestyle='--', alpha=0.7)
+    plt.tight_layout()
+    st.pyplot(fig1)
+    plt.close(fig1) # Close the figure to prevent it from being displayed twice
+
+    # Visualization 2: Product Position Distribution
+    fig2, ax2 = plt.subplots(figsize=(10, 5))
+    sns.countplot(y=filtered_training_data['Product Position'], order=filtered_training_data['Product Position'].value_counts().index, ax=ax2, palette='viridis')
+    ax2.set_title('Distribution of Product Position in Filtered Training Data', fontsize=14)
+    ax2.set_xlabel('Count', fontsize=12)
+    ax2.set_ylabel('Product Position', fontsize=12)
+    ax2.grid(axis='x', linestyle='--', alpha=0.7)
+    plt.tight_layout()
+    st.pyplot(fig2)
+    plt.close(fig2)
+
+    # Visualization 3: Material Distribution
+    fig3, ax3 = plt.subplots(figsize=(10, 6))
+    sns.countplot(y=filtered_training_data['material'], order=filtered_training_data['material'].value_counts().index, ax=ax3, palette='magma')
+    ax3.set_title('Distribution of Material in Filtered Training Data', fontsize=14)
+    ax3.set_xlabel('Count', fontsize=12)
+    ax3.set_ylabel('Material', fontsize=12)
+    ax3.grid(axis='x', linestyle='--', alpha=0.7)
+    plt.tight_layout()
+    st.pyplot(fig3)
+    plt.close(fig3)
 
 with tab1:
   st.header("Prediction and Manual Feedback")
