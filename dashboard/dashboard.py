@@ -65,7 +65,7 @@ with tab1:
   seasonal = st.sidebar.checkbox("Seasonal", False)
 
   terms = st.sidebar.selectbox("Terms", ('jackets', 'jeans', 'shoes', 'sweaters', 't-shirts'))
-  section = st.sidebar.slider("Section", ('MAN', 'WOMAN'))
+  section = st.sidebar.selectbox("Section", ('MAN', 'WOMAN'))
   season = st.sidebar.selectbox("Season", ('Autumn', 'Spring', 'Summer', 'Winter'))
   material = st.sidebar.selectbox("Material", ('Acrylic', 'Cotton', 'Denim', 'Linen', 'Linen Blend', 'Polyester', 'Satin', 'Silk', 'Viscose', 'Wool', 'Wool Blend'))
   origin = st.sidebar.selectbox("Origin", ('Argentina', 'Bangladesh', 'Brazil', 'Cambodia', 'China', 'India', 'Morocco', 'Pakistan', 'Portugal', 'Spain', 'Turkey', 'Vietnam'))
