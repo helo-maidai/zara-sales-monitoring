@@ -33,12 +33,15 @@ def load_production_data():
   return pd.read_csv(PRODUCTION_DATA_PATH)
 
 @st.cache_data
-def load_params():
-  return load_model_params()
+def load_metrics_params():
+  # load_model_params returns (xgb_model, scaler, model_params_dict)
+  # We only need the model_params_dict here for displaying metrics.
+  _, _, metrics_params = load_model_params()
+  return metrics_params
 
 training_data = load_training_data()
 production_data = load_production_data()
-model_params = load_params()
+model_metrics = load_metrics_params()
 
 tab1, tab2, tab3 = st.tabs([
  "Prediction and Manual Feedback",
@@ -89,7 +92,7 @@ with tab1:
   if "latency_ms" not in st.session_state:
     st.session_state["latency_ms"] = None
 
-  if st.button("Run Prediction"): 
+  if st.button("Run Prediction"):
     start_time = time.time()
 
     # Use the predict_sales_volume function
@@ -118,7 +121,7 @@ with tab1:
 
     feedback_text = st.text_area("Business feedback comment", placeholder = "Example: Prediction is useful for inventory planning.")
 
-    if st.button("Submit Monitoring Log"): 
+    if st.button("Submit Monitoring Log"):
       log_prediction(
           product_position = product_position,
           promotion = promotion,
@@ -260,8 +263,8 @@ with tab3:
 
   col1, col2 = st.columns(2)
 
-  col1.metric("Validation MAE", f"{model_params['validation_mae']:.2f}")
-  col2.metric("Validation RMSE", f"{model_params['validation_rmse']:.2f}")
+  col1.metric("Validation MAE", f"{model_metrics['validation_mae']:.2f}")
+  col2.metric("Validation RMSE", f"{model_metrics['validation_rmse']:.2f}")
 
   st.markdown("""
     Use the monitoring results to support the next sprint dicussion.
