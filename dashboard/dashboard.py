@@ -74,7 +74,6 @@ with tab1:
   input_data = {
     "Product Position": product_position_for_prediction,
     "Promotion": 'Yes' if promotion else 'No',
-    "Product Category": product_category,
     "Seasonal": 'Yes' if seasonal else 'No',
     "terms": terms,
     "section": section,
