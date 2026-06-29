@@ -56,19 +56,16 @@ with tab1:
 
   st.sidebar.header("Product Features")
 
-  # Updated input widgets for Zara product features
-  # Changed 'Product Position' to a multiselect
+
   product_position = st.sidebar.multiselect("Product Position", ('Aisle', 'End-cap', 'Front of Store'), default=['Aisle'])
-  # Define product_position_for_prediction from the multiselect output
+
   product_position_for_prediction = product_position[0] if product_position else 'Aisle'
 
-  # Changed 'Promotion' to a checkbox
   promotion = st.sidebar.checkbox("Promotion", False)
-  product_category = st.sidebar.selectbox("Product Category", ('clothing',))
-  # Changed 'Seasonal' to a checkbox
   seasonal = st.sidebar.checkbox("Seasonal", False)
+
   terms = st.sidebar.selectbox("Terms", ('jackets', 'jeans', 'shoes', 'sweaters', 't-shirts'))
-  section = st.sidebar.selectbox("Section", ('MAN', 'WOMAN'))
+  section = st.sidebar.slider("Section", ('MAN', 'WOMAN'))
   season = st.sidebar.selectbox("Season", ('Autumn', 'Spring', 'Summer', 'Winter'))
   material = st.sidebar.selectbox("Material", ('Acrylic', 'Cotton', 'Denim', 'Linen', 'Linen Blend', 'Polyester', 'Satin', 'Silk', 'Viscose', 'Wool', 'Wool Blend'))
   origin = st.sidebar.selectbox("Origin", ('Argentina', 'Bangladesh', 'Brazil', 'Cambodia', 'China', 'India', 'Morocco', 'Pakistan', 'Portugal', 'Spain', 'Turkey', 'Vietnam'))
