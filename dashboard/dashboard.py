@@ -127,7 +127,6 @@ with tab1:
       log_prediction(
           product_position = product_position_for_prediction,
           promotion = 'Yes' if promotion else 'No',
-          product_category = product_category,
           seasonal = 'Yes' if seasonal else 'No',
           terms = terms,
           section = section,
