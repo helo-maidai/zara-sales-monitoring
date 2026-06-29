@@ -57,10 +57,13 @@ with tab1:
   st.sidebar.header("Product Features")
 
   # Updated input widgets for Zara product features
-  product_position = st.sidebar.selectbox("Product Position", ('Aisle', 'End-cap', 'Front of Store'))
-  promotion = st.sidebar.selectbox("Promotion", ('No', 'Yes'))
+  # Changed 'Product Position' to a multiselect
+  product_position = st.sidebar.multiselect("Product Position", ('Aisle', 'End-cap', 'Front of Store'), default=['Aisle'])
+  # Changed 'Promotion' to a checkbox
+  promotion = st.sidebar.checkbox("Promotion", False)
   product_category = st.sidebar.selectbox("Product Category", ('clothing',))
-  seasonal = st.sidebar.selectbox("Seasonal", ('No', 'Yes'))
+  # Changed 'Seasonal' to a checkbox
+  seasonal = st.sidebar.checkbox("Seasonal", False)
   terms = st.sidebar.selectbox("Terms", ('jackets', 'jeans', 'shoes', 'sweaters', 't-shirts'))
   section = st.sidebar.selectbox("Section", ('MAN', 'WOMAN'))
   season = st.sidebar.selectbox("Season", ('Autumn', 'Spring', 'Summer', 'Winter'))
@@ -69,10 +72,10 @@ with tab1:
   price = st.sidebar.number_input("Price", min_value = 0.0, value = 50.0, step = 1.0)
 
   input_data = {
-    "Product Position": product_position,
-    "Promotion": promotion,
+    "Product Position": product_position_for_prediction,
+    "Promotion": 'Yes' if promotion else 'No',
     "Product Category": product_category,
-    "Seasonal": seasonal,
+    "Seasonal": 'Yes' if seasonal else 'No',
     "terms": terms,
     "section": section,
     "season": season,
@@ -123,10 +126,10 @@ with tab1:
 
     if st.button("Submit Monitoring Log"):
       log_prediction(
-          product_position = product_position,
-          promotion = promotion,
+          product_position = product_position_for_prediction,
+          promotion = 'Yes' if promotion else 'No',
           product_category = product_category,
-          seasonal = seasonal,
+          seasonal = 'Yes' if seasonal else 'No',
           terms = terms,
           section = section,
           season = season,

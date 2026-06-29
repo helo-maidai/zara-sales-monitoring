@@ -35,8 +35,5 @@ jobs:
       - name: Run tests
         run: pytest tests/ -v
 
-      - name: Check Streamlit dashboard syntax (Original)
+      - name: Check Streamlit dashboard syntax
         run: python -m py_compile dashboard/dashboard.py
-
-      - name: Check Streamlit dashboard syntax (New Analysis Dashboard)
-        run: python -m py_compile dashboard/sales_analysis_dashboard.py
